@@ -21,30 +21,30 @@ public abstract class MainCommand implements CommandExecutor {
 		if (args.length == 0) return false;
 		
 		if (args[0].equalsIgnoreCase("help")) {
-			help(sender,args);
+			help(sender,label,args);
 			return true;
 		}
 		
 		if (args[0].equalsIgnoreCase("version")) {
-			version(sender,args);
+			version(sender,label,args);
 			return true;
 		}
 		
 		if (args[0].equalsIgnoreCase("reload")) {
-			reload(sender,args);
+			reload(sender,label,args);
 			return true;
 		}
 		
 		return false;
 	}
 	
-	protected abstract void help(CommandSender sender, String[] args);
+	protected abstract void help(CommandSender sender, String label, String[] args);
 	
-	protected void version(CommandSender sender, String[] args) {
+	protected void version(CommandSender sender, String label, String[] args) {
 		sender.sendMessage(this.color + plugin.name + " - by bys1");
 	}
 	
-	protected void reload(CommandSender sender, String[] args) {
+	protected void reload(CommandSender sender, String label, String[] args) {
 		plugin.reloadConfig();
 		sender.sendMessage(this.color + plugin.pdf.getName() + " has been reloaded successfully.");
 	}
