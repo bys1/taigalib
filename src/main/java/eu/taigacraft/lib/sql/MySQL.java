@@ -40,6 +40,15 @@ public class MySQL {
 		return this.connection;
 	}
 	
+	public Statement createStatement() {
+		try {
+			return this.connection.createStatement();
+		} catch (SQLException ex) {
+			plugin.logger.error("Couldn't create statement",ex);
+			return null;
+		}
+	}
+	
 	public ResultSet get(Statement statement, String query) {
 		try {
 			return statement.executeQuery(query);
