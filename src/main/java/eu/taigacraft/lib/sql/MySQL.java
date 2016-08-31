@@ -49,6 +49,10 @@ public class MySQL {
 		}
 	}
 	
+	public ResultSet get(String query) {
+		return get(createStatement(),query);
+	}
+	
 	public ResultSet get(Statement statement, String query) {
 		try {
 			return statement.executeQuery(query);
@@ -56,6 +60,10 @@ public class MySQL {
 			plugin.logger.error("Couldn't get data from MySQL",ex);
 			return null;
 		}
+	}
+	
+	public int update(String query) {
+		return update(createStatement(),query);
 	}
 	
 	public int update(Statement statement, String query) {
