@@ -8,17 +8,17 @@ import java.sql.Statement;
 
 import eu.taigacraft.lib.TaigaPlugin;
 
-public class MySQL {
+public class SQL {
 	
 	private TaigaPlugin plugin;
 	private Connection connection;
 	
-	private MySQL(TaigaPlugin plugin, Connection connection) {
+	private SQL(TaigaPlugin plugin, Connection connection) {
 		this.plugin = plugin;
 		this.connection = connection;
 	}
 	
-	public static MySQL connect(TaigaPlugin plugin, String host, int port, String database, String username, String password) {
+	public static SQL connectMySQL(TaigaPlugin plugin, String host, int port, String database, String username, String password) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch(ClassNotFoundException exception) {
@@ -33,11 +33,36 @@ public class MySQL {
 			plugin.logger.error("Couldn't connect to MySQL",exception);
 			return null;
 		}
-		return new MySQL(plugin,connection);
+		return new SQL(plugin,connection);
+	}
+	
+	public static SQL connectSQLite(TaigaPlugin plugin, String path) {
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch(ClassNotFoundException exception) {
+			plugin.logger.error("SQLite/JDBC not available",exception);
+			return null;
+		}
+		Connection connection;
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:" + path);
+		} catch(SQLException exception) {
+			plugin.logger.error("Couldn't connect to SQLite",exception);
+			return null;
+		}
+		return new SQL(plugin,connection);
 	}
 	
 	public Connection getConnection() {
 		return this.connection;
+	}
+	
+	public void createTable(Table table) {
+		try {
+			createStatement().execute("CREATE TABLE " + table.toString() + ";");
+		} catch (SQLException ex) {
+			plugin.logger.error("Couldn't create table",ex);
+		}
 	}
 	
 	public Statement createStatement() {
