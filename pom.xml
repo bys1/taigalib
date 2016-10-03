@@ -4,7 +4,7 @@
 
   <groupId>eu.taigacraft</groupId>
   <artifactId>lib</artifactId>
-  <version>2.0-pre2</version>
+  <version>2.0</version>
   <packaging>jar</packaging>
   <name>TaigaLib</name>
   <url>http://maven.apache.org</url>
