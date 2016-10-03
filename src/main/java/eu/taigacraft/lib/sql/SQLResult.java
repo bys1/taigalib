@@ -16,6 +16,15 @@ public class SQLResult {
 		this.result = result;
 	}
 	
+	public boolean isBeforeFirst() {
+		try {
+			return result.isBeforeFirst();
+		} catch(SQLException e) {
+			plugin.logger.error("Couldn't iterate over SQLResult",e);
+			return false;
+		}
+	}
+	
 	public boolean next() {
 		try {
 			return result.next();
