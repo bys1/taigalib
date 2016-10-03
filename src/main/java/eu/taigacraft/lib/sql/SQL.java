@@ -2,7 +2,6 @@ package eu.taigacraft.lib.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -74,13 +73,13 @@ public class SQL {
 		}
 	}
 	
-	public ResultSet get(String query) {
+	public SQLResult get(String query) {
 		return get(createStatement(),query);
 	}
 	
-	public ResultSet get(Statement statement, String query) {
+	public SQLResult get(Statement statement, String query) {
 		try {
-			return statement.executeQuery(query);
+			return new SQLResult(plugin,statement.executeQuery(query));
 		} catch (SQLException ex) {
 			plugin.logger.error("Couldn't get data from MySQL",ex);
 			return null;
